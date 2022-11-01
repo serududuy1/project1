@@ -1,0 +1,25 @@
+.container {
+  padding: 100px;
+}
+.bar-top {
+  align-content: center;
+  text-align: center;
+}
+.hidden {
+  display: none;
+}
+.show {
+  display: flex;
+}
+#topup,
+#sell {
+  background-color: gray;
+  text-align: center;
+  /* align-items: center; */
+}
+
+/* .kiri {
+  width: 600px;
+  height: 50px;
+  margin: 20px 360px;
+} */
