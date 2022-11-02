@@ -10,9 +10,10 @@ const History = () => {
       .then((res) => setHdata(res.data));
   }, [setHdata]);
   console.log(hdata);
+
   return (
     <div className="container-history">
-      <table>
+      <table className="zebra-table">
         <thead>
           <tr>
             <th>tanggal</th>

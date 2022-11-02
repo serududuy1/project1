@@ -13,7 +13,7 @@ function App() {
     fetch("http://localhost:8005/v1/allSaldo")
       .then((res) => res.json())
       .then((res) => setDatas(res.data[0]));
-  }, [setDatas]);
+  });
   return (
     <Router>
       <div className="navbar">
@@ -21,21 +21,16 @@ function App() {
       </div>
       <div className="container">
         <div className="d-flex">
-          {/* <button> */}
           <Link to="/" className="btn btn-input">
             Input
           </Link>
-          {/* </button> */}
-          {/* <button className="btn"> */}
           <Link to="/History" className="btn btn-riwayat">
             Riwayat
           </Link>
-          {/* </button> */}
         </div>
       </div>
       <Routes>
         <Route path="/" element={<Home saldo={datas} />} />
-        {/* <Route path="/" element={<Home />} /> */}
         <Route path="/History" element={<History />} />
       </Routes>
     </Router>

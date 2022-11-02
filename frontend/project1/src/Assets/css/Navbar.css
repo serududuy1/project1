@@ -1,5 +1,8 @@
 .navbar {
   text-align: center;
-  background-color: black;
-  color: aqua;
+  background-color: #6c4ab6;
+  color: #b9e0ff;
+  padding: 20px;
+  top: 0;
+  box-shadow: 2px 2px 2px rgba(168, 0, 184, 0.8);
 }

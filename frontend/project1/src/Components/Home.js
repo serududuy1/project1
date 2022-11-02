@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../Assets/css/Home.css";
 const Home = (props) => {
   const [jtgl, setJtgl] = useState("");
@@ -10,15 +12,6 @@ const Home = (props) => {
   const [ttgl, setTtgl] = useState("");
   const [tnominal, setTnominal] = useState("");
 
-  // const sawal = props;
-  // console.log(props.saldo.saldo);
-
-  // useEffect(() => {
-  //   fetch("http://localhost:8005/v1/allSaldo")
-  //     .then((res) => res.json())
-  //     .then((res) => setDatas(res.data[0]));
-  // }, [setDatas]);
-
   const simpanTopup = (e) => {
     e.preventDefault();
     let formDatas = new FormData();
@@ -29,15 +22,21 @@ const Home = (props) => {
     fetch("http://localhost:8005/v1/topup", {
       method: "POST",
       body: formDatas,
-    })
-      .then((res) => res.json())
-      .then((res) => alert(res.message));
+    }).then((res) => res.json());
     fetch("http://localhost:8005/v1/topUp", {
       method: "PUT",
       body: formDatas,
     })
       .then((res) => res.json())
-      .then((res) => alert(res.message));
+      .then((res) =>
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "TOP UP BERHASIL!",
+          showConfirmButton: false,
+          timer: 4000,
+        })
+      );
   };
 
   const sellData = (e) => {
@@ -54,15 +53,21 @@ const Home = (props) => {
     fetch("http://localhost:8005/v1/sell", {
       method: "POST",
       body: formDatas,
-    })
-      .then((res) => res.json())
-      .then((res) => alert(res.message));
+    }).then((res) => res.json());
     fetch("http://localhost:8005/v1/delsaldo", {
       method: "PUT",
       body: formDatas,
     })
       .then((res) => res.json())
-      .then((res) => alert(res.message));
+      .then((res) =>
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "PULSA TERKIRIM",
+          showConfirmButton: false,
+          timer: 4000,
+        })
+      );
   };
   const klikJual = () => {
     setTp(true);
@@ -71,14 +76,24 @@ const Home = (props) => {
     setTp(false);
   };
 
-  // console.log(datas);
+  const rupiah = (number) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+    }).format(number);
+  };
+
   return (
     <>
       <div className="bar-top">
-        <h1>SISA SALDO Rp. {props.saldo.saldo}</h1>
+        <h1>SISA SALDO {rupiah(props.saldo.saldo)}</h1>
 
-        <button onClick={klikJual}>top up</button>
-        <button onClick={klikTopUp}>Jual</button>
+        <button onClick={klikJual} className="btn m-3">
+          top up
+        </button>
+        <button onClick={klikTopUp} className="btn">
+          Jual
+        </button>
       </div>
 
       {tp ? (
@@ -91,7 +106,8 @@ const Home = (props) => {
                   <label>Tanggal</label>
                   <input
                     required
-                    type="text"
+                    className="inputan"
+                    type="date"
                     onChange={(e) => setTtgl(e.target.value)}
                   />
                 </div>
@@ -100,7 +116,9 @@ const Home = (props) => {
 
                   <input
                     required
+                    className="inputan"
                     type="text"
+                    // value={rupiah()}
                     onChange={(e) => setTnominal(e.target.value)}
                   />
                 </div>
@@ -119,6 +137,7 @@ const Home = (props) => {
                   <label>Tanggal</label>
                   <input
                     required
+                    className="inputan"
                     type="date"
                     placeholder="masukkan tanggal"
                     onChange={(e) => setJtgl(e.target.value)}
@@ -126,17 +145,30 @@ const Home = (props) => {
                 </div>
                 <div className="kiri">
                   <label>Provider</label>
-                  <input
+                  <select
+                    type="text"
+                    className="inputan"
+                    onChange={(e) => setJprovider(e.target.value)}
+                  >
+                    <option>SILAHKAH PILIH PROVIDER</option>
+                    <option value="telkomsel">TELKOMSEL</option>
+                    <option value="xl">XL</option>
+                    <option value="indosat">INDOSAT</option>
+                    <option value="three">3</option>
+                  </select>
+                  {/* <input
                     required
+                    className="inputan"
                     type="text"
                     placeholder="masukkan provider"
                     onChange={(e) => setJprovider(e.target.value)}
-                  />
+                  /> */}
                 </div>
                 <div className="kiri">
                   <label>Nominal</label>
                   <select
                     type="text"
+                    className="inputan"
                     onChange={(e) => setJnominal(e.target.value)}
                   >
                     <option>SILAHKAH PILIH NOMINAL</option>
@@ -155,6 +187,7 @@ const Home = (props) => {
                   <label>No Hp</label>
                   <input
                     required
+                    className="inputan"
                     type="number"
                     minLength={10}
                     placeholder="masukkan nomor hp"
