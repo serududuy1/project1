@@ -6,7 +6,7 @@ const { querySQL } = require("../modells");
 module.exports = {
   allSaldo(req, res) {
     const sql = `select * from harta`;
-    querySQL(sql, res);
+    querySQL(sql, res, `berhasil`);
   },
   riwayat(req, res) {
     const sql = `select * from riwayat`;
